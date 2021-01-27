@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
-<styles>
+<style>
         table,th,td{
             border:1px solid black;
         }
-</styles>
+</style>
 <body>
 
     <table>
