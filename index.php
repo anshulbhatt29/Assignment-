@@ -3,25 +3,52 @@
 <style>
         table,th,td{
             border:1px solid black;
+            border-collapse:collapse;
         }
-</style>
+        </style>
 <body>
-
     <table>
         <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Contact</th>
-            <th>City</th>
-            <th>Course</th>
-            <th>Interests</th>
+            <th><?php if(isset($_POST['submit'])){ echo "Name";}?></th>
+            <th><?php if(isset($_POST['submit'])){echo "Email";}?></th>
+            <th><?php if(isset($_POST['submit'])){echo "Contact";}?></th>
+            <th><?php if(isset($_POST['submit'])){echo "City";}?></th>
+            <th><?php if(isset($_POST['submit'])){echo "course";}?></th>
+            <th><?php if(isset($_POST['submit'])){echo"Interests";}?></th>
 </tr>
 <tr>
-    <td> <?php echo $_POST["Name"]; ?></td>
-    <td> <?php echo $_POST["Email"]; ?></td>
-    <td> <?php echo $_POST["contact"]; ?></td>
-    <td> <?php echo $_POST["city"]; ?></td>
-    <td> <?php echo $_POST["course"]; ?></td>
+
+    <td> <?php  if(isset($_POST['submit'])){echo $_POST["Name"];} ?></td>
+    <td> <?php  if(isset($_POST['submit'])){
+        $e=$_POST["Email"];
+        if(!filter_var($e,FILTER_VALIDATE_EMAIL))
+        {
+            echo $_POST["Email"];
+          
+        }
+        else
+        echo "Invalid Input";
+        } ?></td>
+    <td> <?php  if(isset($_POST['submit'])){ echo $_POST["contact"];} ?></td>
+    <td> <?php  if(isset($_POST['submit'])){echo $_POST["city"]; }?></td>
+    <td> <?php if(isset($_POST['submit'])){ echo $_POST["course"];} ?></td>
+    <td><?php
+     if(isset($_POST['submit'])){
+    $count=count($_POST['Interests1']);
+    if($count>2){
+        $count--;
+        foreach($_POST['Interests1'] as $checked){
+            echo $checked ;
+            if($count)
+            echo ',';
+            $count--;
+        }
+}
+else{
+    echo "Minimum 3 and max 5 checkboxes should be selected";
+}
+     }
+    ?></td>
 </tr>
 </table>
 <form action="inde.php" method="post">
@@ -30,7 +57,7 @@
 <label>E-Mail:</label><br>
 <input type="email" name="Email" required><br>
 <label>Contact_No:</label><br>
-<input type="tel" name="contact" required><br>
+<input type="tel" name="contact" pattern="[0-9]{2}[0-9]{4}[0-9]{4}" required><br>
 <label>City:</label><br>
 <select name="city" required>
     <option value="Dehradun">Dehradun</option>
@@ -46,17 +73,16 @@
     <option value="BCOM">BCOM</option>
     </select><br>
     <label >Interests:</label><br>
-    <input type="checkbox" name="Interests1" value="Cricket">
+    <input type="checkbox" name="Interests1[]" value="Cricket">
     <label>Cricket</label>
-    <input type="checkbox" name="Interests2" value="Coding">
+    <input type="checkbox" name="Interests1[]" value="Coding">
     <label>Coding</label>
-    <input type="checkbox" name="Interests3" value="Anime">
+    <input type="checkbox" name="Interests1[]" value="Anime">
     <label>Anime</label>
-    <input type="checkbox" name="Interests4" value="Music">
+    <input type="checkbox" name="Interests1[]" value="Music">
     <label>Music</label>
-    <input type="checkbox" name="Interests5" value="Imagining">
-    <label>Imagining</label>
-    <label>Submit</label><br>
+    <input type="checkbox" name="Interests1[]" value="Imagining">
+    <label>Imagining</label><br>
     <input type="submit" name="submit">
 </form>
 </body>
