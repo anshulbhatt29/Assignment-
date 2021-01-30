@@ -7,9 +7,11 @@
         }
         </style>
 <body>
+<p id="dem"></p>
     <table>
         <tr>
-            <th><?php if(isset($_POST['submit'])){ echo "Name";}?></th>
+            <th><?php
+            if(isset($_POST['submit'])){ echo "Name";}?></th>
             <th><?php if(isset($_POST['submit'])){echo "Email";}?></th>
             <th><?php if(isset($_POST['submit'])){echo "Contact";}?></th>
             <th><?php if(isset($_POST['submit'])){echo "City";}?></th>
@@ -19,15 +21,7 @@
 <tr>
 
     <td> <?php  if(isset($_POST['submit'])){echo $_POST["Name"];} ?></td>
-    <td> <?php  if(isset($_POST['submit'])){
-        $e=$_POST["Email"];
-        if(!filter_var($e,FILTER_VALIDATE_EMAIL))
-        {
-            echo $_POST["Email"];
-          
-        }
-        else
-        echo "Invalid Input";
+    <td> <?php  if(isset($_POST['submit'])){ echo $_POST["Email"];
         } ?></td>
     <td> <?php  if(isset($_POST['submit'])){ echo $_POST["contact"];} ?></td>
     <td> <?php  if(isset($_POST['submit'])){echo $_POST["city"]; }?></td>
@@ -35,7 +29,6 @@
     <td><?php
      if(isset($_POST['submit'])){
     $count=count($_POST['Interests1']);
-    if($count>2){
         $count--;
         foreach($_POST['Interests1'] as $checked){
             echo $checked ;
@@ -43,11 +36,7 @@
             echo ',';
             $count--;
         }
-}
-else{
-    echo "Minimum 3 and max 5 checkboxes should be selected";
-}
-     }
+    }
     ?></td>
 </tr>
 </table>
@@ -73,17 +62,30 @@ else{
     <option value="BCOM">BCOM</option>
     </select><br>
     <label >Interests:</label><br>
-    <input type="checkbox" name="Interests1[]" value="Cricket">
+    <input type="checkbox" id="check" name="Interests1[]" value="Cricket">
     <label>Cricket</label>
-    <input type="checkbox" name="Interests1[]" value="Coding">
+    <input type="checkbox" id="check" name="Interests1[]" value="Coding">
     <label>Coding</label>
-    <input type="checkbox" name="Interests1[]" value="Anime">
+    <input type="checkbox" id="check" name="Interests1[]" value="Anime">
     <label>Anime</label>
-    <input type="checkbox" name="Interests1[]" value="Music">
+    <input type="checkbox" id="check" name="Interests1[]" value="Music">
     <label>Music</label>
-    <input type="checkbox" name="Interests1[]" value="Imagining">
+    <input type="checkbox" id="check" name="Interests1[]" value="Imagining">
     <label>Imagining</label><br>
-    <input type="submit" name="submit">
+    <input type="submit"onclick="if(!my()){event.preventDefault();};" id="dis" name="submit" >
+    
+    <script>
+    function my(){
+      var l=document.querySelectorAll('input[type="checkbox"]:checked');
+      if(l.length<3){
+      alert("Minimum 3 and max 5 checkboxes should be selected");
+      return false;
+      }
+      return true;
+    
+    }
+    </script>
 </form>
 </body>
 </html>
+
